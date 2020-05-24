@@ -24,11 +24,11 @@ import java.util.List;
  */
 @Service
 public class TicketServiceImpl extends ServiceImpl<TicketMapper, Ticket> implements TicketService {
-    @Autowired
+    @Autowired(required = false)
     private PassengerMapper passengerMapper;
-    @Autowired
+    @Autowired(required = false)
     private TravelMapper travelMapper;
-    @Autowired
+    @Autowired(required = false)
     SeatMapper seatMapper;
     @Override
     public List<TicketVO> dataToVO(List<Ticket> tickets) {

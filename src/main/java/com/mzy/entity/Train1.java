@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,49 +21,50 @@ import lombok.experimental.Accessors;
 @Data
   @EqualsAndHashCode(callSuper = false)
   @Accessors(chain = true)
-@TableName(value = "train1")
+@TableName(value = "train_schedule")
 public class Train1 implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @TableField("ID")
+    @TableField("train_id")
     private String train_id;
 
-    @TableField("Type")
+    @TableField("train_type")
     private String Type;
 
-    @TableField("Station")
+    @TableField("station")
     private String station;
 
-    @TableField("S_No")
+    @TableField("s_no")
     private Integer station_order;
 
-    @TableField("Day")
+    @TableField("day")
     private Integer day;
 
-    @TableField("A_Time")
-    private String arrive_time;
+    @TableField("a_time")
+    private LocalTime arrive_time;
 
-    @TableField("D_Time")
-    private String depart_Time;
+    @TableField("d_time")
+    private LocalTime depart_Time;
 
-    @TableField("R_Date")
+    @TableField("r_date")
     private String duration;
 
-    @TableField("Distance")
+    @TableField("distance")
     private Integer Distance;
 
-    @TableField("P1")
+    @TableField("p1")
     private String P1;
 
-    @TableField("P2")
+    @TableField("p2")
     private String P2;
 
-    @TableField("P3")
+    @TableField("p3")
     private String P3;
 
-    @TableField("P4")
+    @TableField("p4")
     private String P4;
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -108,19 +110,19 @@ public class Train1 implements Serializable {
         this.day = day;
     }
 
-    public String getArrive_time() {
+    public LocalTime getArrive_time() {
         return arrive_time;
     }
 
-    public void setArrive_time(String arrive_time) {
+    public void setArrive_time(LocalTime arrive_time) {
         this.arrive_time = arrive_time;
     }
 
-    public String getDepart_Time() {
+    public LocalTime getDepart_Time() {
         return depart_Time;
     }
 
-    public void setDepart_Time(String depart_Time) {
+    public void setDepart_Time(LocalTime depart_Time) {
         this.depart_Time = depart_Time;
     }
 
@@ -170,5 +172,32 @@ public class Train1 implements Serializable {
 
     public void setP4(String p4) {
         P4 = p4;
+    }
+
+    public Train1(String train_id, String type, String station, Integer station_order, Integer day, LocalTime arrive_time,LocalTime depart_Time, String duration, Integer distance, String p1, String p2, String p3, String p4) {
+        this.train_id = train_id;
+        Type = type;
+        this.station = station;
+        this.station_order = station_order;
+        this.day = day;
+        this.arrive_time = arrive_time;
+        this.depart_Time = depart_Time;
+        this.duration = duration;
+        Distance = distance;
+        P1 = p1;
+        P2 = p2;
+        P3 = p3;
+        P4 = p4;
+    }
+
+    public Train1() {
+        P1="10";
+        P2="20";
+        P3="30";
+        P4="40";
+        depart_Time=LocalTime.now();
+        arrive_time=LocalTime.now();
+        Type="测试豪华车";
+        day=1;
     }
 }

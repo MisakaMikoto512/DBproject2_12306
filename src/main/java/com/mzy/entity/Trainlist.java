@@ -1,6 +1,9 @@
 package com.mzy.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,13 +22,13 @@ import lombok.experimental.Accessors;
 public class Trainlist implements Serializable {
 
     private static final long serialVersionUID=1L;
-
+    @TableId
     private String train_id;
-
+    @TableField(value = "train_type")
     private String type;
-
+    @TableField(value ="depart_station" )
     private String start;
-
+    @TableField(value ="arrive_station" )
     private String end;
 
     private String duration;

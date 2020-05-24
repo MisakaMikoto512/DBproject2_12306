@@ -24,7 +24,6 @@ public class Station implements Serializable {
 
       @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
-
     private String station_name;
 
     private String station_short_pinyin;

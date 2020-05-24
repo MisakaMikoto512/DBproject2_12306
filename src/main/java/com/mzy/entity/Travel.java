@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.lang.String;
 import java.io.Serializable;
+import java.time.LocalTime;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,6 +24,19 @@ import lombok.experimental.Accessors;
   @Accessors(chain = true)
 public class Travel implements Serializable {
 
+    public Travel() {
+        soft_bed_price=new BigDecimal(40);
+
+        hard_bed_price=new BigDecimal(30);
+
+        soft_seat_price=new BigDecimal(20);
+
+       hard_seat_price=new BigDecimal(10);
+       day=1;
+       depart_station_order=1;
+       arrive_station_order=2;
+    }
+
     private static final long serialVersionUID=1L;
 
       @TableId(value = "travel_id", type = IdType.AUTO)
@@ -37,9 +52,9 @@ public class Travel implements Serializable {
 
     private String arrive_station;
 
-    private String depart_time;
+    private LocalTime depart_time;
 
-    private String arrive_time;
+    private LocalTime arrive_time;
 
     private BigDecimal soft_bed_price;
 
@@ -105,19 +120,19 @@ public class Travel implements Serializable {
         this.arrive_station = arrive_station;
     }
 
-    public String getDepart_time() {
+    public LocalTime getDepart_time() {
         return depart_time;
     }
 
-    public void setDepart_time(String depart_time) {
+    public void setDepart_time(LocalTime depart_time) {
         this.depart_time = depart_time;
     }
 
-    public String getArrive_time() {
+    public LocalTime getArrive_time() {
         return arrive_time;
     }
 
-    public void setArrive_time(String arrive_time) {
+    public void setArrive_time(LocalTime arrive_time) {
         this.arrive_time = arrive_time;
     }
 
