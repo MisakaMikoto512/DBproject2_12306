@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan("com.mzy.mapper.xml")
 @MapperScan("com.mzy.mapper")
 @MapperScan("com.mzy.service")
 public class Test1Application {

@@ -1,5 +1,8 @@
 package com.mzy.vo;
 
+import lombok.Data;
+
+@Data
 public class ScheduleVO {
     Integer station_order;
     String station;

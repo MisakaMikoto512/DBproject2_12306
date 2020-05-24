@@ -14,25 +14,33 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface Travel_dynamicMapper extends BaseMapper<Travel_dynamic> {
     @Update("update travel_dynamic\n" +
-            "set ${seat_type}=(${seat_type} -1)\n" +
+            "set ${seat_type}=${seat_type}-1\n" +
             "where travel_id in\n" +
             "      (\n" +
-            "       select ts.travel_id\n" +
-            "       from travel ts join (select train_id, depart_station_order, arrive_station_order from travel where travel_id = ${travel_id})x\n" +
-            "       where ts.train_id in (x.train_id)\n" +
-            "         and not ((ts.depart_station_order >= x.arrive_station_order) or\n" +
-            "                  (ts.arrive_station_order <= x.depart_station_order)));")
+            "          with x as (\n" +
+            "              select train_id, depart_station_order, arrive_station_order\n" +
+            "              from travel\n" +
+            "              where travel_id = ${travel_id})\n" +
+            "          select ts.travel_id\n" +
+            "          from travel ts\n" +
+            "                   join x on ts.train_id = x.train_id\n" +
+            "              and not ((ts.depart_station_order >= x.arrive_station_order) or\n" +
+            "                       (ts.arrive_station_order <= x.depart_station_order)));")
     void updateticket(String seat_type,int travel_id);
 
     @Update("update travel_dynamic\n" +
-            "set ${seat_type}=(${seat_type} +1)\n" +
+            "set ${seat_type}=${seat_type}+1\n" +
             "where travel_id in\n" +
             "      (\n" +
-            "       select ts.travel_id\n" +
-            "       from travel ts join (select train_id, depart_station_order, arrive_station_order from travel where travel_id = ${travel_id})x\n" +
-            "       where ts.train_id in (x.train_id)\n" +
-            "         and not ((ts.depart_station_order >= x.arrive_station_order) or\n" +
-            "                  (ts.arrive_station_order <= x.depart_station_order)));")
-    void resetticket(String seat_type,int travel_id);
+            "          with x as (\n" +
+            "              select train_id, depart_station_order, arrive_station_order\n" +
+            "              from travel\n" +
+            "              where travel_id = ${travel_id})\n" +
+            "          select ts.travel_id\n" +
+            "          from travel ts\n" +
+            "                   join x on ts.train_id = x.train_id\n" +
+            "              and not ((ts.depart_station_order >= x.arrive_station_order) or\n" +
+            "                       (ts.arrive_station_order <= x.depart_station_order)));")
+    void resetRestTicket(String seat_type,int travel_id);
 
 }

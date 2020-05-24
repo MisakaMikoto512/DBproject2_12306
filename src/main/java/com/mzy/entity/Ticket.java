@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -31,8 +33,9 @@ public class Ticket implements Serializable {
       private Double ticket_price;
       private String ticket_entrance;
       private Integer seat_id;
-
       private Long order_id;
+      @TableLogic
+      private Integer is_valid;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

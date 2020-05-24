@@ -2,6 +2,7 @@ package com.mzy.entity;
 
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -27,8 +28,8 @@ public class Order implements Serializable {
     @TableId(value = "order_id",type = IdType.ASSIGN_ID)
       private Long order_id;
     private String user_id;
-    private String create_time;
-    private String update_time;
+    private LocalDateTime create_time;
+    private LocalDateTime update_time;
     private Integer status;
     private Double order_price;
 
@@ -58,19 +59,19 @@ public class Order implements Serializable {
         this.user_id = user_id;
     }
 
-    public String getCreate_time() {
+    public LocalDateTime getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(String create_time) {
+    public void setCreate_time(LocalDateTime create_time) {
         this.create_time = create_time;
     }
 
-    public String getUpdate_time() {
+    public LocalDateTime getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(String update_time) {
+    public void setUpdate_time(LocalDateTime update_time) {
         this.update_time = update_time;
     }
 

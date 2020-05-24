@@ -33,7 +33,7 @@ public class OrderController {
     private OrderMapper orderMapper;
     @Autowired
     OrderServiceImpl orderService;
-    @GetMapping("/findAll")
+    @GetMapping("/findAll")//TODO
     List<Order> findAll(){
         List<Order> orders=orderMapper.selectList(null);
         orders.forEach(System.out::println);
@@ -42,12 +42,12 @@ public class OrderController {
         System.out.println("!");
         return orders;
     }
-    @GetMapping("/byuser/{admin}")
+    @GetMapping("/order/byuser/{userid}")
     List<OrderVO> findByUserId(@PathVariable String userid){
         List<OrderVO> orderVOS=orderService.findOrderVOByUser(userid);
         return orderVOS;
     }
-    @GetMapping("order/findByOrder_id/{order_id}")
+    @GetMapping("/order/findByOrderid/{order_id}")
     OrderVO findById(@PathVariable int order_id){
         Order order=orderMapper.selectById(order_id);
         OrderVO orderVO=orderService.orderToVO(order);
@@ -55,11 +55,20 @@ public class OrderController {
     }
     @PostMapping("/reserve/ReserveVO")
     public ReservationReturnVO create (@RequestBody ReserveVO orderForm, BindingResult bindingResult){
-        if(!bindingResult.hasErrors()){
+        if(!bindingResult.hasErrors()){//TODO 这里应该对body做数据校验
             ReservationReturnVO result = orderService.createOrder(orderForm);
             return result;
         }
         return null;
+    }
+    @GetMapping("order/refund/{order_id}")
+    public String refund(@PathVariable Long order_id){
+        boolean state=orderService.refund(order_id);
+        if(state){
+            return "退票成功!";
+        }else {
+            return "退票失败!";
+        }
     }
 
 

@@ -2,10 +2,7 @@ package com.mzy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.mzy.entity.Order;
-import com.mzy.entity.Passenger;
-import com.mzy.entity.Ticket;
-import com.mzy.entity.Travel_dynamic;
+import com.mzy.entity.*;
 import com.mzy.mapper.*;
 import com.mzy.enumpackege.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -44,6 +41,7 @@ import java.util.Random;
 
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+    public static final int REFUND=2;
     @Autowired
     private Travel_dynamicMapper travel_dynamicMapper;
     @Autowired
@@ -114,11 +112,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 totalPrice+=ticket.getTicket_price();
                 ticketMapper.insert(ticket);
             }
-            order.setCreate_time(LocalDateTime.now().toString());
+            order.setCreate_time(LocalDateTime.now());
             order.setStatus(orderMessage.RESERVE_SUCCESS.getCode());
             order.setUser_id(reserveVO.getUser_id());
             order.setOrder_price(totalPrice);
-            order.setUpdate_time(LocalDateTime.now().toString());
+            order.setUpdate_time(LocalDateTime.now());
             orderMapper.insert(order);
             ReservationReturnVO reservationReturnVO = new ReservationReturnVO(orderMessage.RESERVE_SUCCESS.getCode(), orderMessage.RESERVE_SUCCESS.getMessage(), order_id);
             return reservationReturnVO;
@@ -139,7 +137,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         ticket.setDate(date);
         ticket.setTicket_price(40.0);//TODO
         ticket.setTicket_entrance("检票口1");
-        int seat_id=seatMapper.findAvailableSeat(travel_id,seatType).get(0).getSeat_id();
+        int seat_id=seatMapper.findAvailableSeat(travel_id,seatType).get(0).getSeat_id();//TODO
         ticket.setSeat_id(seat_id);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id_card_number", passengerVO.getId_card_number());
@@ -199,11 +197,47 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 break;
             default:
         }
-
     }
-//
-//    Integer updateRestTicket(){
-//
-//    }
+    void resetRestTicket(String seattype,int travel_id){
+        switch (seattype){
+            case("硬座"):
+                travel_dynamicMapper.resetRestTicket("hard_seat_rest_ticket",travel_id);
+                break;
+            case("软座"):
+                travel_dynamicMapper.resetRestTicket("soft_seat_rest_ticket",travel_id);
+                break;
+            case("硬卧"):
+                travel_dynamicMapper.resetRestTicket("hard_bed_rest_ticket",travel_id);
+                break;
+            case("软卧"):
+                travel_dynamicMapper.resetRestTicket("soft_bed_rest_ticket",travel_id);
+                break;
+            default:
+        }
+    }
+    public boolean refund(Long order_id){
+       Order currentOrder=orderMapper.selectById(order_id);
+       if(currentOrder!=null){
+           currentOrder.setStatus(REFUND);
+           orderMapper.updateById(currentOrder);
+       }
+       QueryWrapper<Ticket> queryWrapper=new QueryWrapper<>();
+       queryWrapper.eq("order_id",order_id);
+       List<Ticket> tickets=ticketMapper.selectList(queryWrapper);
+       if(tickets==null||tickets.size()==0){
+           return false;
+       }
+       else {
+           for (Ticket t:tickets
+                ) {
+                Seat seat=seatMapper.selectById(t.getSeat_id());//找到座位类型
+               resetRestTicket(seat.getSeat_type(),t.getTravel_id());//让余票加1
+               ticketMapper.deleteById(t.getTicket_id());
+
+           }
+       }
+        return true;
+    }
+
 
 }

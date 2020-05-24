@@ -1,11 +1,21 @@
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/traindbnew?serverTimezone=UTC&seUnicode=true&charecterEncoding=UTF-8
+#    username: root
+#    password: mzy666
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/traindbnew?serverTimezone=UTC&seUnicode=true&charecterEncoding=UTF-8
-    username: root
-    password: mzy666
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/traindbnew
+    username: postgres
+    password: 123456
 
 mybatis-plus:
     configuration:
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
         map-underscore-to-camel-case: false
+    global-config:
+        db-config:
+          logic-not-delete-value: 1
+          logic-delete-value: 0

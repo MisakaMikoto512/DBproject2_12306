@@ -27,11 +27,40 @@ public class User implements Serializable {
 
     private String authority;
 
-      /**
-     * 用户本人的乘车人id
-     */
-      @TableField("Passenger")
-    private Integer Passenger;
+    private String phone_number;
 
+    public User(String userName,String userPassword,String authority,String phone_number){
+        this.user_id = userName;
+        this.password = userPassword;
+        this.authority = authority;
+        this.phone_number = phone_number;
+    }
 
+    public String getUserName(){
+        return user_id;
+    }
+
+    public void setUserName(String userName){
+        this.user_id = userName;
+    }
+
+    public String getUserPassword(){
+        return password;
+    }
+
+    public void setUserPassword(String userPassword){
+        this.password = userPassword;
+    }
+
+    public void setAuthority(String authority){
+           this.authority = authority;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public String getPhone_number(){
+        return phone_number;
+    }
 }

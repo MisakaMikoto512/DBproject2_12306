@@ -3,7 +3,7 @@ package com.mzy.entity;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import java.lang.String;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,9 +37,9 @@ public class Travel implements Serializable {
 
     private String arrive_station;
 
-    private LocalDateTime depart_time;
+    private String depart_time;
 
-    private LocalDateTime arrive_time;
+    private String arrive_time;
 
     private BigDecimal soft_bed_price;
 
@@ -105,19 +105,19 @@ public class Travel implements Serializable {
         this.arrive_station = arrive_station;
     }
 
-    public LocalDateTime getDepart_time() {
+    public String getDepart_time() {
         return depart_time;
     }
 
-    public void setDepart_time(LocalDateTime depart_time) {
+    public void setDepart_time(String depart_time) {
         this.depart_time = depart_time;
     }
 
-    public LocalDateTime getArrive_time() {
+    public String getArrive_time() {
         return arrive_time;
     }
 
-    public void setArrive_time(LocalDateTime arrive_time) {
+    public void setArrive_time(String arrive_time) {
         this.arrive_time = arrive_time;
     }
 

@@ -4,7 +4,10 @@ import com.mzy.entity.Travel;
 import com.mzy.mapper.TravelMapper;
 import com.mzy.service.TravelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mzy.vo.ScheduleVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TravelServiceImpl extends ServiceImpl<TravelMapper, Travel> implements TravelService {
-
+        List<ScheduleVO> scheduleVOS(){
+            return null;
+        }
 }
